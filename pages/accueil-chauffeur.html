@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Chauffeur - GXO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-orange-900">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-[#FF5A1A] to-[#FF4500] shadow-2xl">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <img src="static/gxo-logo-official.svg" alt="GXO" class="h-12 md:h-16 filter brightness-0 invert">
+                <div class="text-right text-white">
+                    <p class="text-sm opacity-90">Chauffeur #<span id="driver-id">123</span></p>
+                    <p class="font-bold text-lg" id="driver-name">Nom du chauffeur</p>
+                    <p class="text-xs opacity-75"><i class="fas fa-building mr-1"></i><span id="driver-company">Entreprise</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Message de félicitations -->
+        <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-3xl shadow-2xl p-8 text-center mb-8 transform hover:scale-105 transition-all">
+            <div class="inline-block p-6 bg-white/20 rounded-full mb-4">
+                <i class="fas fa-trophy text-white text-6xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-white mb-3">
+                Félicitations ! 🎉
+            </h1>
+            <p class="text-white text-xl mb-2">
+                Vous avez terminé la procédure d'arrivée
+            </p>
+            <p class="text-white/90">
+                Toutes les étapes de sécurité ont été validées
+            </p>
+        </div>
+
+        <!-- Récapitulatif -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Statut -->
+            <div class="bg-white rounded-2xl shadow-xl p-6">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check-circle text-green-500 text-3xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Statut</h2>
+                        <p class="text-green-600 font-semibold">Autorisé à opérer</p>
+                    </div>
+                </div>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between py-2 border-b">
+                        <span class="text-gray-600">Vidéo de sécurité</span>
+                        <span class="text-green-600 font-semibold"><i class="fas fa-check mr-1"></i>Validée</span>
+                    </div>
+                    <div class="flex justify-between py-2 border-b">
+                        <span class="text-gray-600">Inscription</span>
+                        <span class="text-green-600 font-semibold"><i class="fas fa-check mr-1"></i>Complétée</span>
+                    </div>
+                    <div class="flex justify-between py-2 border-b">
+                        <span class="text-gray-600">Tâches de sécurité</span>
+                        <span class="text-green-600 font-semibold"><i class="fas fa-check mr-1"></i>5/5</span>
+                    </div>
+                    <div class="flex justify-between py-2">
+                        <span class="text-gray-600">Quai assigné</span>
+                        <span class="text-orange-600 font-semibold">Quai #<span id="driver-quai">1</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informations -->
+            <div class="bg-white rounded-2xl shadow-xl p-6">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-info-circle text-blue-500 text-3xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Informations</h2>
+                        <p class="text-gray-600">Données d'arrivée</p>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="bg-gray-50 rounded-lg p-3">
+                        <p class="text-xs text-gray-500 mb-1">Heure d'arrivée</p>
+                        <p class="font-semibold text-gray-800" id="arrival-time">--:--</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3">
+                        <p class="text-xs text-gray-500 mb-1">Langue</p>
+                        <p class="font-semibold text-gray-800" id="driver-lang">Nederlands</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-3">
+                        <p class="text-xs text-gray-500 mb-1">Durée de la procédure</p>
+                        <p class="font-semibold text-gray-800">~8-12 minutes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Étapes complétées -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-list-check text-orange-500 mr-3"></i>
+                Étapes Complétées
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-4 text-white">
+                    <i class="fas fa-qrcode text-3xl mb-2"></i>
+                    <p class="font-semibold">1. Scan QR Code</p>
+                    <p class="text-xs opacity-90">Point d'entrée</p>
+                </div>
+                <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-4 text-white">
+                    <i class="fas fa-globe text-3xl mb-2"></i>
+                    <p class="font-semibold">2. Langue</p>
+                    <p class="text-xs opacity-90">Sélection</p>
+                </div>
+                <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-4 text-white">
+                    <i class="fas fa-video text-3xl mb-2"></i>
+                    <p class="font-semibold">3. Vidéo</p>
+                    <p class="text-xs opacity-90">Instructions sécurité</p>
+                </div>
+                <div class="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-4 text-white">
+                    <i class="fas fa-user-plus text-3xl mb-2"></i>
+                    <p class="font-semibold">4. Inscription</p>
+                    <p class="text-xs opacity-90">Données chauffeur</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-4 text-white">
+                    <i class="fas fa-tasks text-3xl mb-2"></i>
+                    <p class="font-semibold">5. Tâches de Sécurité (5/5)</p>
+                    <p class="text-xs opacity-90">Toutes les vérifications complétées</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions rapides -->
+        <div class="bg-white rounded-2xl shadow-xl p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-bolt text-yellow-500 mr-3"></i>
+                Actions Rapides
+            </h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <a href="qrcode-chauffeur.html" class="block bg-gradient-to-r from-gray-500 to-gray-600 text-white p-4 rounded-xl text-center hover:shadow-lg transform hover:scale-105 transition-all">
+                    <i class="fas fa-redo text-3xl mb-2"></i>
+                    <p class="font-semibold">Recommencer</p>
+                    <p class="text-xs opacity-90">Nouvelle procédure</p>
+                </a>
+                <a href="chauffeur-taches.html" class="block bg-gradient-to-r from-blue-500 to-blue-600 text-white p-4 rounded-xl text-center hover:shadow-lg transform hover:scale-105 transition-all">
+                    <i class="fas fa-tasks text-3xl mb-2"></i>
+                    <p class="font-semibold">Revoir Tâches</p>
+                    <p class="text-xs opacity-90">Liste des tâches</p>
+                </a>
+                <a href="chauffeur-video.html" class="block bg-gradient-to-r from-red-500 to-red-600 text-white p-4 rounded-xl text-center hover:shadow-lg transform hover:scale-105 transition-all">
+                    <i class="fas fa-video text-3xl mb-2"></i>
+                    <p class="font-semibold">Revoir Vidéo</p>
+                    <p class="text-xs opacity-90">Instructions sécurité</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center text-white/70 text-sm">
+            <p><i class="fas fa-shield-alt mr-2"></i>GXO Procedures Moissy-Cramayel</p>
+            <p class="mt-2">Merci pour votre respect des consignes de sécurité</p>
+        </div>
+    </div>
+
+    <script>
+        const driverId = sessionStorage.getItem('chauffeur_id') || '123';
+        const driverName = sessionStorage.getItem('chauffeur_pseudo') || 'Chauffeur';
+        const driverCompany = sessionStorage.getItem('chauffeur_entreprise') || 'Transport SA';
+        const driverQuai = sessionStorage.getItem('chauffeur_quai') || '1';
+        const driverLang = sessionStorage.getItem('chauffeur_langue') || 'nl';
+        
+        document.getElementById('driver-id').textContent = driverId;
+        document.getElementById('driver-name').textContent = driverName;
+        document.getElementById('driver-company').textContent = driverCompany;
+        document.getElementById('driver-quai').textContent = driverQuai;
+        
+        const langNames = {
+            nl: 'Nederlands', fr: 'Français', de: 'Deutsch', it: 'Italiano',
+            fi: 'Suomi', da: 'Dansk', cs: 'Čeština', bg: 'Български',
+            pl: 'Polski', ro: 'Română', pt: 'Português', hr: 'Hrvatski'
+        };
+        document.getElementById('driver-lang').textContent = langNames[driverLang] || 'Nederlands';
+        
+        const now = new Date();
+        document.getElementById('arrival-time').textContent = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Tâches - GXO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-orange-900 p-4">
+    <div class="max-w-4xl mx-auto py-8">
+        <!-- Header -->
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-6">
+            <div class="bg-gradient-to-r from-[#FF5A1A] to-[#FF4500] p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <img src="static/gxo-logo-official.svg" alt="GXO" class="h-10 filter brightness-0 invert">
+                    <div class="text-white text-right">
+                        <p class="text-sm opacity-90">Chauffeur #<span id="driver-id">123</span></p>
+                        <p class="font-bold" id="driver-name">Nom du chauffeur</p>
+                    </div>
+                </div>
+                <h1 class="text-2xl md:text-3xl font-bold text-white text-center">
+                    <i class="fas fa-tasks mr-2"></i>
+                    <span id="titre">Mes Tâches de Sécurité</span>
+                </h1>
+                <div class="mt-4 bg-white/20 rounded-lg p-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-white font-semibold" id="progression-label">Progression:</span>
+                        <span class="text-white font-bold text-lg"><span id="taches-completees">0</span> / 5</span>
+                    </div>
+                    <div class="mt-2 bg-white/30 rounded-full h-3 overflow-hidden">
+                        <div id="progress-bar" class="bg-green-400 h-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des tâches -->
+        <div class="space-y-4">
+            <!-- Tâche 1 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 task-card" data-task="1">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center">
+                            <i class="fas fa-hard-hat text-orange-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800 text-lg mb-2" data-translate="task1-title">Port des EPI (Équipements de Protection Individuelle)</h3>
+                        <p class="text-gray-600 text-sm mb-3" data-translate="task1-desc">Vérifier que vous portez votre gilet haute visibilité et vos chaussures de sécurité</p>
+                        <button onclick="validateTask(1)" class="btn-validate bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-all">
+                            <i class="fas fa-check mr-2"></i>
+                            <span data-translate="btn-validate">Valider</span>
+                        </button>
+                        <div class="validated-badge hidden">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <span class="text-green-600 font-semibold ml-2" data-translate="validated">Validé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tâche 2 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 task-card" data-task="2">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-map-marked-alt text-blue-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800 text-lg mb-2" data-translate="task2-title">Connaissance du plan de circulation</h3>
+                        <p class="text-gray-600 text-sm mb-3" data-translate="task2-desc">Confirmer que vous connaissez les zones de circulation autorisées et interdites</p>
+                        <button onclick="validateTask(2)" class="btn-validate bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-all">
+                            <i class="fas fa-check mr-2"></i>
+                            <span data-translate="btn-validate">Valider</span>
+                        </button>
+                        <div class="validated-badge hidden">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <span class="text-green-600 font-semibold ml-2" data-translate="validated">Validé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tâche 3 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 task-card" data-task="3">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                            <i class="fas fa-fire-extinguisher text-red-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800 text-lg mb-2" data-translate="task3-title">Localisation des équipements de sécurité</h3>
+                        <p class="text-gray-600 text-sm mb-3" data-translate="task3-desc">Repérer les extincteurs, sorties de secours et points de rassemblement</p>
+                        <button onclick="validateTask(3)" class="btn-validate bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-all">
+                            <i class="fas fa-check mr-2"></i>
+                            <span data-translate="btn-validate">Valider</span>
+                        </button>
+                        <div class="validated-badge hidden">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <span class="text-green-600 font-semibold ml-2" data-translate="validated">Validé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tâche 4 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 task-card" data-task="4">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-yellow-100 flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle text-yellow-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800 text-lg mb-2" data-translate="task4-title">Procédure d'urgence</h3>
+                        <p class="text-gray-600 text-sm mb-3" data-translate="task4-desc">Comprendre les actions à entreprendre en cas d'incident ou d'alarme</p>
+                        <button onclick="validateTask(4)" class="btn-validate bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-all">
+                            <i class="fas fa-check mr-2"></i>
+                            <span data-translate="btn-validate">Valider</span>
+                        </button>
+                        <div class="validated-badge hidden">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <span class="text-green-600 font-semibold ml-2" data-translate="validated">Validé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tâche 5 -->
+            <div class="bg-white rounded-xl shadow-lg p-6 task-card" data-task="5">
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+                            <i class="fas fa-clipboard-check text-green-500 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-gray-800 text-lg mb-2" data-translate="task5-title">Signature du registre de présence</h3>
+                        <p class="text-gray-600 text-sm mb-3" data-translate="task5-desc">Confirmer votre présence et votre prise de connaissance des consignes</p>
+                        <button onclick="validateTask(5)" class="btn-validate bg-orange-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-orange-600 transition-all">
+                            <i class="fas fa-check mr-2"></i>
+                            <span data-translate="btn-validate">Valider</span>
+                        </button>
+                        <div class="validated-badge hidden">
+                            <i class="fas fa-check-circle text-green-500 text-2xl"></i>
+                            <span class="text-green-600 font-semibold ml-2" data-translate="validated">Validé</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bouton terminer -->
+        <div id="btn-terminer-container" class="hidden mt-8 text-center">
+            <a href="accueil-chauffeur.html" class="inline-block bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all">
+                <i class="fas fa-flag-checkered mr-2"></i>
+                <span data-translate="btn-terminer">Procédure Terminée - Accéder au Dashboard</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const driverId = urlParams.get('id') || sessionStorage.getItem('chauffeur_id') || '123';
+        const driverName = sessionStorage.getItem('chauffeur_pseudo') || 'Chauffeur';
+        
+        document.getElementById('driver-id').textContent = driverId;
+        document.getElementById('driver-name').textContent = driverName;
+        
+        let completedTasks = 0;
+        
+        function validateTask(taskNumber) {
+            const taskCard = document.querySelector(`[data-task="${taskNumber}"]`);
+            const btnValidate = taskCard.querySelector('.btn-validate');
+            const badge = taskCard.querySelector('.validated-badge');
+            
+            btnValidate.classList.add('hidden');
+            badge.classList.remove('hidden');
+            taskCard.classList.add('opacity-75');
+            
+            completedTasks++;
+            updateProgress();
+            
+            if (completedTasks === 5) {
+                setTimeout(() => {
+                    document.getElementById('btn-terminer-container').classList.remove('hidden');
+                    document.getElementById('btn-terminer-container').scrollIntoView({ behavior: 'smooth' });
+                }, 500);
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('taches-completees').textContent = completedTasks;
+            const percent = (completedTasks / 5) * 100;
+            document.getElementById('progress-bar').style.width = percent + '%';
+        }
+    </script>
+</body>
+</html>

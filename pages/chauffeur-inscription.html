@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Chauffeur - GXO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-orange-900 p-4">
+    <div class="max-w-2xl mx-auto py-8">
+        <!-- Header -->
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mb-6">
+            <div class="bg-gradient-to-r from-[#FF5A1A] to-[#FF4500] p-6 text-center">
+                <img src="static/gxo-logo-official.svg" alt="GXO" class="h-12 mx-auto mb-4 filter brightness-0 invert">
+                <h1 class="text-3xl font-bold text-white mb-2">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    <span id="titre">Inscription Chauffeur</span>
+                </h1>
+                <p class="text-white/90" id="sous-titre">Enregistrez vos informations</p>
+            </div>
+        </div>
+
+        <!-- Formulaire -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8">
+            <form id="form-inscription" class="space-y-6">
+                <!-- Pseudo -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2" id="label-pseudo">
+                        <i class="fas fa-user mr-2 text-orange-500"></i>
+                        Votre Pseudo / Nom
+                    </label>
+                    <input 
+                        type="text" 
+                        id="pseudo" 
+                        required
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all"
+                        placeholder="Ex: Jean Dupont"
+                    >
+                </div>
+
+                <!-- Entreprise -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2" id="label-entreprise">
+                        <i class="fas fa-building mr-2 text-orange-500"></i>
+                        Entreprise de Transport
+                    </label>
+                    <input 
+                        type="text" 
+                        id="entreprise" 
+                        required
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all"
+                        placeholder="Ex: Transport Express SA"
+                    >
+                </div>
+
+                <!-- Numéro de quai -->
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2" id="label-quai">
+                        <i class="fas fa-warehouse mr-2 text-orange-500"></i>
+                        Numéro de Quai Assigné
+                    </label>
+                    <select 
+                        id="numero_quai" 
+                        required
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-orange-500 focus:outline-none transition-all"
+                    >
+                        <option value="">-- Sélectionner --</option>
+                        <option value="1">Quai 1</option>
+                        <option value="2">Quai 2</option>
+                        <option value="3">Quai 3</option>
+                        <option value="4">Quai 4</option>
+                        <option value="5">Quai 5</option>
+                        <option value="6">Quai 6</option>
+                        <option value="7">Quai 7</option>
+                        <option value="8">Quai 8</option>
+                        <option value="9">Quai 9</option>
+                        <option value="10">Quai 10</option>
+                    </select>
+                </div>
+
+                <!-- Validation vidéo -->
+                <div class="bg-green-50 border-2 border-green-500 rounded-lg p-4">
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                        <div>
+                            <p class="font-semibold text-gray-800" id="video-valide">Vidéo de sécurité validée</p>
+                            <p class="text-sm text-gray-600" id="langue-info">Langue: <span id="langue-display">Néerlandais</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boutons -->
+                <div class="flex gap-4">
+                    <a href="chauffeur-video.html" class="flex-1 bg-gray-300 text-gray-700 py-3 px-6 rounded-lg font-bold text-center hover:bg-gray-400 transition-all">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        <span id="btn-retour">Retour</span>
+                    </a>
+                    <button 
+                        type="submit" 
+                        class="flex-1 bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-6 rounded-lg font-bold hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg"
+                    >
+                        <i class="fas fa-check mr-2"></i>
+                        <span id="btn-valider">Valider</span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Message de succès -->
+            <div id="message-succes" class="hidden mt-6 bg-green-100 border-2 border-green-500 rounded-lg p-4 text-center">
+                <i class="fas fa-check-circle text-green-500 text-4xl mb-2"></i>
+                <p class="text-green-800 font-bold text-lg" id="succes-titre">Inscription réussie !</p>
+                <p class="text-green-700" id="succes-texte">Votre numéro de chauffeur:</p>
+                <p class="text-3xl font-bold text-green-800 my-2" id="chauffeur-id">123</p>
+                <a href="chauffeur-taches.html?id=123" id="link-taches" class="inline-block mt-4 bg-green-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-600 transition-all">
+                    <i class="fas fa-tasks mr-2"></i>
+                    <span id="btn-taches">Voir mes tâches</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const langue = sessionStorage.getItem('chauffeur_langue') || 'nl';
+        
+        const translations = {
+            nl: { nom: 'Nederlands', titre: 'Registratie Chauffeur', sousTitre: 'Vul uw gegevens in', pseudo: 'Uw Pseudo / Naam', entreprise: 'Transportbedrijf', quai: 'Toegewezen Kade Nummer', videoValide: 'Veiligheidsvideo gevalideerd', btnRetour: 'Terug', btnValider: 'Bevestigen', succesTitre: 'Registratie geslaagd!', succesTexte: 'Uw chauffeurnummer:', btnTaches: 'Bekijk mijn taken' },
+            fr: { nom: 'Français', titre: 'Inscription Chauffeur', sousTitre: 'Enregistrez vos informations', pseudo: 'Votre Pseudo / Nom', entreprise: 'Entreprise de Transport', quai: 'Numéro de Quai Assigné', videoValide: 'Vidéo de sécurité validée', btnRetour: 'Retour', btnValider: 'Valider', succesTitre: 'Inscription réussie !', succesTexte: 'Votre numéro de chauffeur:', btnTaches: 'Voir mes tâches' },
+            de: { nom: 'Deutsch', titre: 'Fahrerregistrierung', sousTitre: 'Geben Sie Ihre Daten ein', pseudo: 'Ihr Pseudonym / Name', entreprise: 'Transportunternehmen', quai: 'Zugewiesene Docknummer', videoValide: 'Sicherheitsvideo validiert', btnRetour: 'Zurück', btnValider: 'Bestätigen', succesTitre: 'Registrierung erfolgreich!', succesTexte: 'Ihre Fahrernummer:', btnTaches: 'Meine Aufgaben anzeigen' },
+            it: { nom: 'Italiano', titre: 'Registrazione Autista', sousTitre: 'Inserisci i tuoi dati', pseudo: 'Il tuo Pseudonimo / Nome', entreprise: 'Azienda di Trasporti', quai: 'Numero Banchina Assegnato', videoValide: 'Video di sicurezza convalidato', btnRetour: 'Indietro', btnValider: 'Conferma', succesTitre: 'Registrazione riuscita!', succesTexte: 'Il tuo numero autista:', btnTaches: 'Visualizza i miei compiti' }
+        };
+        
+        const t = translations[langue] || translations.nl;
+        document.getElementById('titre').textContent = t.titre;
+        document.getElementById('sous-titre').textContent = t.sousTitre;
+        document.getElementById('label-pseudo').innerHTML = '<i class="fas fa-user mr-2 text-orange-500"></i>' + t.pseudo;
+        document.getElementById('label-entreprise').innerHTML = '<i class="fas fa-building mr-2 text-orange-500"></i>' + t.entreprise;
+        document.getElementById('label-quai').innerHTML = '<i class="fas fa-warehouse mr-2 text-orange-500"></i>' + t.quai;
+        document.getElementById('video-valide').textContent = t.videoValide;
+        document.getElementById('langue-display').textContent = t.nom;
+        document.getElementById('btn-retour').textContent = t.btnRetour;
+        document.getElementById('btn-valider').textContent = t.btnValider;
+        document.getElementById('succes-titre').textContent = t.succesTitre;
+        document.getElementById('succes-texte').textContent = t.succesTexte;
+        document.getElementById('btn-taches').textContent = t.btnTaches;
+        
+        document.getElementById('form-inscription').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const pseudo = document.getElementById('pseudo').value;
+            const entreprise = document.getElementById('entreprise').value;
+            const numero_quai = document.getElementById('numero_quai').value;
+            
+            const chauffeurId = Math.floor(Math.random() * 1000) + 100;
+            
+            sessionStorage.setItem('chauffeur_id', chauffeurId);
+            sessionStorage.setItem('chauffeur_pseudo', pseudo);
+            sessionStorage.setItem('chauffeur_entreprise', entreprise);
+            sessionStorage.setItem('chauffeur_quai', numero_quai);
+            
+            document.getElementById('chauffeur-id').textContent = chauffeurId;
+            document.getElementById('link-taches').href = 'chauffeur-taches.html?id=' + chauffeurId;
+            
+            document.getElementById('form-inscription').classList.add('hidden');
+            document.getElementById('message-succes').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>

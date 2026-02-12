@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidéo Instructions - GXO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-black flex flex-col">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-[#FF5A1A] to-[#FF4500] p-3 md:p-4 shadow-lg">
+        <div class="container mx-auto">
+            <div class="flex items-center justify-between mb-2">
+                <img src="static/gxo-logo-official.svg" alt="GXO" class="h-8 md:h-10 filter brightness-0 invert">
+                <div class="text-white font-bold text-sm md:text-base" id="langue-selectionnee"></div>
+            </div>
+            <div class="text-center">
+                <h1 class="text-xl md:text-2xl font-bold text-white flex items-center justify-center gap-2">
+                    <i class="fas fa-play-circle"></i>
+                    <span id="titre-instructions">Instructions</span>
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vidéo -->
+    <div class="flex-1 flex items-center justify-center p-2 md:p-4">
+        <div class="w-full max-w-5xl">
+            <div class="relative bg-gray-900 rounded-lg overflow-hidden shadow-2xl" style="min-height: 200px;">
+                <video 
+                    id="video-instructions" 
+                    class="w-full h-auto mx-auto"
+                    style="max-height: 70vh; object-fit: contain; display: block;"
+                    controls
+                    playsinline
+                    webkit-playsinline="true"
+                    preload="metadata"
+                    crossorigin="anonymous"
+                >
+                    <source src="" type="video/mp4" id="video-source" />
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
+                
+                <div id="video-placeholder" class="absolute inset-0 flex items-center justify-center p-4 md:p-8 bg-gray-900">
+                    <div class="text-center">
+                        <svg class="animate-spin h-16 w-16 md:h-20 md:w-20 text-orange-500 mb-4 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <p class="text-white text-lg md:text-xl mb-2 font-semibold">Chargement de la vidéo...</p>
+                        <p class="text-gray-400 text-xs md:text-sm">Patientez quelques instants</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barre de progression -->
+            <div class="mt-3 md:mt-4 bg-gray-800 rounded-full h-2 md:h-3 overflow-hidden">
+                <div id="progress-bar" class="bg-gradient-to-r from-[#FF5A1A] to-[#FF4500] h-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <div class="text-center mt-2 md:mt-3 text-gray-400 text-xs md:text-sm" id="video-timer">00:00 / 00:00</div>
+
+            <!-- Message bloquant -->
+            <div id="message-bloquant" class="mt-4 md:mt-6 bg-yellow-500 text-black p-3 md:p-4 rounded-lg text-center font-semibold text-sm md:text-base">
+                <i class="fas fa-lock mr-2"></i>
+                <span id="message-text">Veuillez regarder la vidéo complète avant de continuer</span>
+            </div>
+
+            <!-- Bouton continuer -->
+            <div id="btn-continuer-container" class="hidden mt-4 md:mt-6 text-center">
+                <a id="btn-continuer" href="chauffeur-inscription.html" class="inline-block bg-gradient-to-r from-green-500 to-green-600 text-white px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:shadow-lg transition-all">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    <span id="btn-continuer-text">Continuer vers l'inscription</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const langue = urlParams.get('lang') || 'nl';
+        
+        sessionStorage.setItem('chauffeur_langue', langue);
+        
+        const translations = {
+            bg: { header: '🇧🇬 Български', titre: 'Инструкции', message: 'Моля, гледайте цялото видео преди да продължите', btn: 'Продължи към регистрацията' },
+            cs: { header: '🇨🇿 Čeština', titre: 'Pokyny', message: 'Prosím sledujte celé video před pokračováním', btn: 'Pokračovat k registraci' },
+            da: { header: '🇩🇰 Dansk', titre: 'Instruktioner', message: 'Se venligst hele videoen før du fortsætter', btn: 'Fortsæt til registrering' },
+            de: { header: '🇩🇪 Deutsch', titre: 'Anweisungen', message: 'Bitte sehen Sie sich das gesamte Video an, bevor Sie fortfahren', btn: 'Weiter zur Registrierung' },
+            hr: { header: '🇭🇷 Hrvatski', titre: 'Upute', message: 'Molimo pogledajte cijeli video prije nastavka', btn: 'Nastavi s registracijom' },
+            it: { header: '🇮🇹 Italiano', titre: 'Istruzioni', message: 'Si prega di guardare l\'intero video prima di continuare', btn: 'Continua con la registrazione' },
+            pl: { header: '🇵🇱 Polski', titre: 'Instrukcje', message: 'Proszę obejrzeć cały film przed kontynuowaniem', btn: 'Przejdź do rejestracji' },
+            pt: { header: '🇵🇹 Português', titre: 'Instruções', message: 'Por favor, assista ao vídeo completo antes de continuar', btn: 'Continuar para o registo' },
+            ro: { header: '🇷🇴 Română', titre: 'Instrucțiuni', message: 'Vă rugăm să vizionați întregul video înainte de a continua', btn: 'Continuă către înregistrare' },
+            fr: { header: '🇫🇷 Français', titre: 'Instructions', message: 'Veuillez regarder la vidéo complète avant de continuer', btn: 'Continuer vers l\'inscription' },
+            nl: { header: '🇳🇱 Nederlands', titre: 'Instructies', message: 'Bekijk de volledige video voordat u doorgaat', btn: 'Doorgaan naar registratie' },
+            fi: { header: '🇫🇮 Suomi', titre: 'Ohjeet', message: 'Katso koko video ennen jatkamista', btn: 'Jatka rekisteröintiin' }
+        };
+        
+        const t = translations[langue] || translations.nl;
+        document.getElementById('langue-selectionnee').textContent = t.header;
+        document.getElementById('titre-instructions').textContent = t.titre;
+        document.getElementById('message-text').textContent = t.message;
+        document.getElementById('btn-continuer-text').textContent = t.btn;
+        
+        const videoBaseUrl = 'https://raw.githubusercontent.com/ayoubdil1972-stack/gxo-video-assets/main/videos';
+        const videoUrls = {
+            'fr': videoBaseUrl + '/instructions-fr.mp4',
+            'nl': videoBaseUrl + '/instructions-nl.mp4',
+            'fi': videoBaseUrl + '/instructions-fi.mp4',
+            'bg': videoBaseUrl + '/instructions-bg.mp4',
+            'cs': videoBaseUrl + '/instructions-cs.mp4',
+            'da': videoBaseUrl + '/instructions-da.mp4',
+            'de': videoBaseUrl + '/instructions-de.mp4',
+            'hr': videoBaseUrl + '/instructions-hr.mp4',
+            'it': videoBaseUrl + '/instructions-it.mp4',
+            'pl': videoBaseUrl + '/instructions-pl.mp4',
+            'pt': videoBaseUrl + '/instructions-pt.mp4',
+            'ro': videoBaseUrl + '/instructions-ro.mp4'
+        };
+        
+        const video = document.getElementById('video-instructions');
+        const videoSource = document.getElementById('video-source');
+        const progressBar = document.getElementById('progress-bar');
+        const videoTimer = document.getElementById('video-timer');
+        const messageBloquant = document.getElementById('message-bloquant');
+        const btnContinuerContainer = document.getElementById('btn-continuer-container');
+        const placeholder = document.getElementById('video-placeholder');
+        
+        if (videoUrls[langue]) {
+            videoSource.src = videoUrls[langue];
+            video.load();
+            
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                placeholder.innerHTML = `
+                    <div class="text-center">
+                        <button id="mobile-play-btn" class="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-12 py-6 rounded-full text-2xl font-bold shadow-2xl">
+                            <i class="fas fa-play-circle text-5xl mb-3"></i>
+                            <div class="text-lg">▶ Lancer la vidéo</div>
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('mobile-play-btn').addEventListener('click', function() {
+                    placeholder.classList.add('hidden');
+                    video.muted = false;
+                    video.play();
+                });
+            } else {
+                video.addEventListener('canplay', function() {
+                    placeholder.classList.add('hidden');
+                });
+            }
+            
+            video.addEventListener('timeupdate', function() {
+                if (!isNaN(video.duration) && video.duration > 0) {
+                    const percent = (video.currentTime / video.duration) * 100;
+                    progressBar.style.width = percent + '%';
+                    
+                    const currentMin = Math.floor(video.currentTime / 60);
+                    const currentSec = Math.floor(video.currentTime % 60);
+                    const durationMin = Math.floor(video.duration / 60);
+                    const durationSec = Math.floor(video.duration % 60);
+                    
+                    videoTimer.textContent = 
+                        String(currentMin).padStart(2, '0') + ':' + String(currentSec).padStart(2, '0') +
+                        ' / ' +
+                        String(durationMin).padStart(2, '0') + ':' + String(durationSec).padStart(2, '0');
+                }
+            });
+            
+            video.addEventListener('ended', function() {
+                progressBar.style.width = '100%';
+                messageBloquant.classList.add('hidden');
+                btnContinuerContainer.classList.remove('hidden');
+                sessionStorage.setItem('video_completed', 'true');
+            });
+        }
+    </script>
+</body>
+</html>
